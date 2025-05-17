@@ -24,29 +24,37 @@
                         <i class="icon-chevron-right"></i>
                     </li>
                     <li>
-                        <div class="text-tiny">New Brand</div>
+                        <div class="text-tiny">Edit Brand</div>
                     </li>
                 </ul>
             </div>
             <!-- new-category -->
             <div class="wg-box">
-                <form class="form-new-product form-style-1" action="{{route('admin.brand.store')}}" method="POST"
+                <form class="form-new-product form-style-1" action="{{route('admin.brand.update')}}" method="POST"
                       enctype="multipart/form-data">
                       @csrf
+                      @method('PUT')
+                      <input type="hidden" name="id" value="{{ $brand->id }}">
                     <fieldset class="name">
                         <div class="body-title">Brand Name <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Brand name" name="name" tabindex="0" value="{{old('name')}}" aria-required="true" required="">
+                        <input class="flex-grow" type="text" placeholder="Brand name" name="name" tabindex="0" value="{{ $brand->name}}" aria-required="true" required="">
                     </fieldset>
                     @error('name') <span class="alert alert-danger tex-center">{{$message}}</span> @enderror
                     <fieldset class="name">
                         <div class="body-title">Brand Slug <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Brand Slug" name="slug" tabindex="0" value="{{old('slug')}}" aria-required="true" required="">
+                        <input class="flex-grow" type="text" placeholder="Brand Slug" name="slug" tabindex="0" value="{{ $brand->slug}}" aria-required="true" required="">
                     </fieldset>
                     @error('slug') <span class="alert alert-danger tex-center">{{$message}}</span> @enderror
                     <fieldset>
                         <div class="body-title">Upload images <span class="tf-color-1">*</span>
                         </div>
                         <div class="upload-image flex-grow">
+                            @if ($brand->image)
+                                <div class="item" id="imgpreview">
+                                    <img src="{{ asset('uploads/brands')}}/{{ $brand->image }}" class="effect8" alt="">
+                                </div>
+                                
+                            @endif
                             <div class="item" id="imgpreview" style="display:none">
                                 <img src="upload-1.html" class="effect8" alt="">
                             </div>
