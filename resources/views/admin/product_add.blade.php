@@ -119,8 +119,6 @@
                         </div>
                     </fieldset>
                     @error('image') <span class="alert alert-danger tex-center">{{$message}}</span> @enderror
-
-
                     <fieldset>
                         <div class="body-title mb-10">Upload Gallery Images</div>
                         <div class="upload-image mb-16">
@@ -221,17 +219,14 @@
                 }
             });
 
-            $("input[name='name']").on("change", function(){
-                $("input[name='slug']").val(StringToSlug($(this).val()));
-            });
-             $("#gFile").on("change", function(e){
-                const photoInp = $("#gFile");
+            $("#gFile").on("change", function(e){
                 const gphotos = this.files;
-                $.each(gphotos,function (key val) {
-                    $("#galUpload").prepend('<div class="item gitems"><img src="'+URL.createObjectURL(val)+'" alt=""></div>');
-                
-                })
+                $.each(gphotos, function (key, val) {
+                    const imgUrl = URL.createObjectURL(val);
+                    $("#galUpload").prepend(`<div class="item gitems"><img src="${imgUrl}" /></div>`);
+                });
             });
+
 
             $("input[name='name']").on("change", function(){
                 $("input[name='slug']").val(StringToSlug($(this).val()));
