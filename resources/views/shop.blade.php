@@ -369,12 +369,18 @@
                     <div class="swiper-container background-img js-swiper-slider" data-settings='{"resizeObserver": true}'>
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
-                        <a href="details.html"><img loading="lazy" src="{{ asset('uploads/products')}}/{{ $product->image }}" width="330"
-                            height="400" alt="{{ $product->name }}" class="pc__img"></a>
+                        <a href="{{ route('shop.product.details', ['product_slug'=>$product->slug]) }}">
+                          <img  loading="lazy"
+                            src="{{ $product->image ? asset('uploads/products/' . $product->image) : "" }}"
+                            width="330" height="400"
+                            alt="{{ $product->name ?? 'Ürün' }}"
+                            class="pc__img">
+
+                        </a>
                         </div>
                         <div class="swiper-slide">
                             @foreach (explode(",",$product->images) as $gimg )
-                                <a href="details.html"><img loading="lazy" src="{{ asset('uploads/products')}}/{{ $gimg}}" width="330" height="400" alt="{{ $product->name }}" class="pc__img">
+                                <a href="{{ route('shop.product.details', ['product_slug'=>$product->slug]) }}"><img loading="lazy" src="{{ asset('uploads/products')}}/{{ $gimg}}" width="330" height="400" alt="{{ $product->name }}" class="pc__img">
                                 </a>
                             @endforeach
 
