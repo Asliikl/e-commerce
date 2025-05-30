@@ -83,7 +83,7 @@ class AdminController extends Controller
         $brand->save();
         return redirect()->route('admin.brands')->with('status','Brand has been updated succesfuly!');
     }
-    
+
     public function GenerateBrandThumbnailsImage($image,$imageName)
     {
         $destinationPath = public_path('uploads/brands');
@@ -107,7 +107,7 @@ class AdminController extends Controller
     public function categories()
     {
         $categories=Category::orderBy('id','DESC')->paginate(10);
-        return view('admin.categories',compact('categories'));  
+        return view('admin.categories',compact('categories'));
     }
     public function category_add()
     {
@@ -198,7 +198,7 @@ class AdminController extends Controller
         $brands = Brand::select('id','name')->orderBy('name')->get();
         return view('admin.product_add',compact('categories','brands'));
     }
-    
+
     public function product_store(Request $request)
     {
         $request->validate([
@@ -239,7 +239,7 @@ class AdminController extends Controller
             $this->GenerateProductThumbnailsImage($image,$imageName);
             $product->image = $imageName;
         }
-        
+
         $gallery_arr = array();
         $gallery_images = "";
         $counter  = 1;
@@ -357,7 +357,7 @@ class AdminController extends Controller
         }
         $product->images = $gallery_images;
         $product->save();
-        return redirect()->route('admin.products')->with('status','Product has been updated succesfuly!');  
+        return redirect()->route('admin.products')->with('status','Product has been updated succesfuly!');
     }
 
     public function product_delete($id)
