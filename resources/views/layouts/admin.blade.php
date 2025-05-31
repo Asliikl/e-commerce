@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="surfside media" />
+    <meta name="author" content="Cuialy media" />
 
     <title>{{ config('app.namen', 'Laravel') }}</title>
 
@@ -142,7 +142,7 @@
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="coupons.html" class="">
+                                <a href="{{ route('admin.coupons') }}" class="">
                                     <div class="icon"><i class="icon-grid"></i></div>
                                     <div class="text">Coupons</div>
                                 </a>
@@ -461,7 +461,7 @@
 
 
                     <div class="bottom-page">
-                        <div class="body-text">Copyright © 2024 SurfsideMedia</div>
+                        <div class="body-text">Copyright © 2025 Cuialy</div>
                     </div>
                 </div>
 
