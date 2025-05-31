@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+    <style>
+        .filled-heart
+        {
+            color:orange;
+        }
+    </style>
 
   <main class="pt-90">
     <div class="mb-md-1 pb-md-3"></div>
@@ -19,7 +25,7 @@
                       </svg>
                     </a>
                   </div>
-                  @foreach (explode(',',$product->images) as $gimg )                      
+                  @foreach (explode(',',$product->images) as $gimg )
                   <div class="swiper-slide product-single__image-item">
                     <img loading="lazy" class="h-auto" src="{{ asset('uploads/products')}}/{{$gimg }}" width="674"
                       height="674" alt="" />
@@ -28,7 +34,7 @@
                         <use href="#icon_zoom" />
                       </svg>
                     </a>
-                  </div>                    
+                  </div>
                   @endforeach
                 </div>
                 <div class="swiper-button-prev"><svg width="7" height="11" viewBox="0 0 7 11"
@@ -45,7 +51,7 @@
               <div class="swiper-container">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide product-single__image-item"><img loading="lazy" class="h-auto"src="{{ asset('uploads/products/thumbnails')}}/{{$product->image }}" width="104" height="104" alt="" /></div>
-                        @foreach (explode(',',$product->images) as $gimg )                       
+                        @foreach (explode(',',$product->images) as $gimg )
                          <div class="swiper-slide product-single__image-item"><img loading="lazy" class="h-auto" src="{{ asset('uploads/products/thumbnails')}}/{{$gimg}}" width="104" height="104" alt="" /></div>
                         @endforeach
                   </div>
@@ -119,7 +125,7 @@
                 <div class="qty-control__reduce">-</div>
                 <div class="qty-control__increase">+</div>
               </div><!-- .qty-control -->
-              <input type="hidden" name="id" value="{{ $product->id }}">              
+              <input type="hidden" name="id" value="{{ $product->id }}">
               <input type="hidden" name="name" value="{{ $product->name }}">
               <input type="hidden" name="price" value="{{ $product->sale_price == '' ? $product->regular_price : $product->sale_price }}">
               <button type="submit" class="btn btn-primary btn-addtocart" data-aside="cartDrawer">
@@ -128,10 +134,35 @@
           </form>
           @endif
           <div class="product-single__addtolinks">
-            <a href="#" class="menu-link menu-link_us-s add-to-wishlist"><svg width="16" height="16" viewBox="0 0 20 20"
-                fill="none" xmlns="http://www.w3.org/2000/svg">
-                <use href="#icon_heart" />
-              </svg><span>Add to Wishlist</span></a>
+
+              @if(Cart::instance('wishlist')->content()->where('id',$product->id)->count()>0)
+
+                  <form method="POST" action="{{ route('wishlist.item.remove', ['rowId'=>Cart::instance('wishlist')->content()->where('id', $product->id)->first()->rowId]) }}" id="frm-remove-item">
+                      @csrf
+                      @method('DELETE')
+                      <a href="javascript:void(0)" class="menu-link menu-link_us-s add-to-wishlist filled-heart" onclick="document.getElementById('frm-remove-item').submit();">
+                          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <use href="#icon_heart" />
+                      </svg><span>Remove from Wishlist</span>
+                    </a>
+                  </form>
+              @else
+                  <form method="POST" action="{{route('wishlist.add')}}" id="wishlist-form">
+                      @csrf
+                      <input type="hidden" name="id" value="{{$product->id}}">
+                      <input type="hidden" name="name" value="{{$product->name}}">
+                      <input type="hidden" name="price" value="{{$product->sale_price == '' ? $product->regular_price : $product->sale_price }}">
+                      <input type="hidden" name="quantity" value="1">
+
+                      <a href="#" class="menu-link menu-link_us-s add-to-wishlist"  onclick="document.getElementById('wishlist-form').submit();">
+                          <svg width="16" height="16" viewBox="0 0 20 20"  fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <use href="#icon_heart" />
+                      </svg><span>Add to Wishlist</span>
+                  </a>
+                  </form>
+              @endif
+
+
             <share-button class="share-button">
               <button class="menu-link menu-link_us-s to-share border-0 bg-transparent d-flex align-items-center">
                 <svg width="16" height="19" viewBox="0 0 16 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -411,7 +442,7 @@
                     @else
                     <form name="addtocart-form" method="POST" action="{{ route('cart.add') }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ $rproduct->id }}">              
+                    <input type="hidden" name="id" value="{{ $rproduct->id }}">
                     <input type="hidden" name="name" value="{{ $rproduct->name }}">
                     <input type="hidden" name="price" value="{{ $rproduct->sale_price == '' ? $rproduct->regular_price : $rproduct->sale_price }}">
                     <button type="submit" class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium js-add-cart"
@@ -424,7 +455,7 @@
                     <p class="pc__category">{{ $rproduct->category->name }}</p>
                     <h6 class="pc__title"><a href="{{ route('shop.product.details', ['product_slug'=>$product->slug]) }}">{{$rproduct->name}}</a></h6>
                     <div class="product-card__price d-flex">
-                    <span class="money price">                       
+                    <span class="money price">
                         @if ($product->sale_price)
                             <s> {{ $product->regular_price }}</s> ${{ $rproduct->sale_price }}
                         @else

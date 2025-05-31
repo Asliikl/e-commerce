@@ -32,16 +32,17 @@
         <div class="layout-wrap">
 
             <!-- <div id="preload" class="preload-container">
-<div class="preloading">
-    <span></span>
-</div>
-</div> -->
+                <div class="preloading">
+                    <span></span>
+                </div>
+                </div>
+            -->
 
             <div class="section-menu-left">
                 <div class="box-logo">
                     <a href="index.html" id="site-logo-inner">
                         <img class="" id="logo_header_1" alt="" src="{{asset('images/logo/logo.png')}}"
-                             data-light="{{asset('images/logo/logo.png')}}" data-dark="{{asset('images/logo/logo.png')}}">
+                             data-light="{{asset('images/logo/logo.png')}}" width="150" data-dark="{{asset('images/logo/logo.png')}}">
                     </a>
                     <div class="button-show-hide">
                         <i class="icon-menu-left"></i>
