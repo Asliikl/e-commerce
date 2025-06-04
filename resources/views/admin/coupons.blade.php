@@ -64,12 +64,14 @@
                                     <td>{{ $coupon->expiry_date }}</td>
                                     <td>
                                         <div class="list-icon-function">
-                                            <a href="#">
+                                            <a href="{{ route('admin.coupon.edit',['id'=>$coupon->id]) }}">
                                                 <div class="item edit">
                                                     <i class="icon-edit-3"></i>
                                                 </div>
                                             </a>
-                                            <form action="#" method="POST">
+                                            <form action="{{ route('admin.coupon.delete',['id'=>$coupon->id]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
                                                 <div class="item text-danger delete">
                                                     <i class="icon-trash-2"></i>
                                                 </div>
@@ -96,3 +98,27 @@
     </div>
 
 @endsection
+
+@push('scripts')
+<script>
+    $(function () {
+        $('.delete').on('click', function (e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+
+            swal({
+                title: "Are you sure?",
+                text: "You won't delete this record!",
+                icon: "warning",
+                buttons: ["NO", "YES"],
+                dangerMode: true
+            }).then(function (willDelete) {
+                if (willDelete) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script> 
+    
+@endpush
