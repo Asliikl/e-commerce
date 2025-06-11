@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->decimal('subtotal');
+            $table->decimal('discount')->default(0);
             $table->decimal('tax');
             $table->decimal('total');
             $table->string('name');
