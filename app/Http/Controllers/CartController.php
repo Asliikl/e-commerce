@@ -184,7 +184,6 @@ class CartController extends Controller
             $transaction->status = "pending";
             $transaction->save();
         }
-       
 
         Cart::instance('cart')->destroy();
         Session::forget('checkout');
