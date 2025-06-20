@@ -43,7 +43,7 @@
                     </tr>
                     <tr>
                         <th>Order Date</th>
-                        <td>{{$order->created_date}}</td>
+                        <td>{{$order->created_at}}</td>
                         <th>Delivered Date</th>
                         <td>{{$order->delivered_date}}</td>
                         <th>Created Date</th>
@@ -129,14 +129,14 @@
             <h5>Shipping Address</h5>
             <div class="my-account__address-item col-md-6">
                 <div class="my-account__address-item__detail">
-                    <p>Divyansh Kumar</p>
-                    <p>Flat No - 13, R. K. Wing - B</p>
-                    <p>ABC, DEF</p>
-                    <p>GHT, </p>
-                    <p>AAA</p>
-                    <p>000000</p>
+                    <p>{{ $order->name }}</p>
+                    <p>{{ $order->address }}</p>
+                    <p>{{ $order->locality }}</p>
+                    <p>{{ $order->city }},{{ $order->country }} </p>
+                    <p>{{ $order->landmark }}</p>
+                    <p>{{ $order->zip }}</p>
                     <br>
-                    <p>Mobile : 1234567891</p>
+                    <p>Mobile : {{ $order->phone }}</p>
                 </div>
             </div>
         </div>
@@ -147,27 +147,28 @@
                 <tbody>
                     <tr>
                         <th>Subtotal</th>
-                        <td>172.00</td>
+                        <td>{{ $order->subtotal}}</td>
                         <th>Tax</th>
-                        <td>36.12</td>
+                        <td>{{ $order->tax}}</td>
                         <th>Discount</th>
-                        <td>0.00</td>
+                        <td>{{ $order->discount}}</td>
                     </tr>
                     <tr>
                         <th>Total</th>
-                        <td>208.12</td>
+                        <td>{{ $order->total}}</td>
                         <th>Payment Mode</th>
-                        <td>cod</td>
+                        <td>{{ $transaction->mode}}</td>
                         <th>Status</th>
-                        <td>pending</td>
-                    </tr>
-                    <tr>
-                        <th>Order Date</th>
-                        <td>2024-07-11 00:54:14</td>
-                        <th>Delivered Date</th>
-                        <td></td>
-                        <th>Canceled Date</th>
-                        <td></td>
+                        <td>
+                            @if ($transaction->status == 'approved')
+                                <span class="badge bg-success">Approved</span>
+                            @elseif ($transaction->status == 'declinded')
+                                <span class="badge bg-danger">Declinded</span>
+                            @elseif ($transaction->status == 'refunded')
+                                <span class="badge bg-secondary">Refunded</span>
+                            @endif
+                            <span class="badge bg-warning">Pending</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
