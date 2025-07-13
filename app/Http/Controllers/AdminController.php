@@ -474,5 +474,4 @@ class AdminController extends Controller
         return redirect()->back()->with('status','Status changed successfully!');
     }
 
-
 }
